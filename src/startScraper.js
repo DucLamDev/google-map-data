@@ -3,27 +3,33 @@ import { generateAllGrids } from './modules/gridGenerator.js';
 import { addMapsSearchJob } from './queues/queueSetup.js';
 import logger from './utils/logger.js';
 
-const CITIES = ['Ho Chi Minh', 'Ha Noi', 'Nha Trang', 'Da Lat'];
+const CITIES = ['Ho Chi Minh'];
 
 const KEYWORDS = [
   'travel agency',
+  'tour operator',
   'hotel',
-  'restaurant',
-  'coffee shop',
-  'spa',
-  'gym',
-  'dental clinic',
-  'real estate agency',
+  'resort',
+  'hostel',
+  'homestay',
   'car rental',
-  'beauty salon',
+  'motorbike rental',
+  'tour guide',
+  'cruise',
+  'airline ticket office',
+  'visa service',
+  'travel insurance',
+  'tourist attraction',
+  'adventure tour',
 ];
 
 const startScraper = async () => {
   await connectDB();
   logger.info('=== Starting Lead Scraper ===');
 
-  // 1. Generate grid coordinates for all cities
-  const gridPoints = generateAllGrids(CITIES);
+  // 1. Generate grid coordinates for all cities with finer resolution
+  // 0.03 degrees ≈ 3km for complete coverage of Ho Chi Minh City
+  const gridPoints = generateAllGrids(CITIES, 0.03);
   logger.info(`Total grid points: ${gridPoints.length}`);
   logger.info(`Keywords: ${KEYWORDS.length}`);
   logger.info(`Total jobs to queue: ${gridPoints.length * KEYWORDS.length}`);

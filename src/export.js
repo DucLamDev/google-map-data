@@ -20,8 +20,12 @@ export const exportToCSV = async (filters = {}, filename = 'leads') => {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
   const filePath = path.join(EXPORT_DIR, `${filename}_${timestamp}.csv`);
 
+  // Write UTF-8 BOM first so Excel recognizes Vietnamese characters
+  fs.writeFileSync(filePath, '\uFEFF', 'utf8');
+
   const csvWriter = createObjectCsvWriter({
     path: filePath,
+    append: true,
     header: [
       { id: 'name', title: 'Company Name' },
       { id: 'website', title: 'Website' },
@@ -35,6 +39,7 @@ export const exportToCSV = async (filters = {}, filename = 'leads') => {
       { id: 'leadScore', title: 'Lead Score' },
       { id: 'emailValid', title: 'Email Valid' },
     ],
+    encoding: 'utf8',
   });
 
   const businesses = await Business.find(filters)

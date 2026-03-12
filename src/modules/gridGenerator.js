@@ -2,10 +2,10 @@ import logger from '../utils/logger.js';
 
 const CITY_BOUNDS = {
   'Ho Chi Minh': {
-    latMin: 10.70,
-    latMax: 10.90,
-    lonMin: 106.60,
-    lonMax: 106.80,
+    latMin: 10.45,
+    latMax: 11.15,
+    lonMin: 106.35,
+    lonMax: 107.05,
   },
   'Ha Noi': {
     latMin: 20.95,
